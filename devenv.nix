@@ -4,11 +4,8 @@
   config,
   inputs,
   ...
-}: {
-  packages = with pkgs; [
-    git
-  ];
-  starship.enable = true;
+}:
+{
   languages.python = {
     enable = true;
     version = "3.12";
