@@ -986,15 +986,14 @@ class CrowdStrikeResponses(Responses):
             if c.type == "output_text"
         ]
 
-        # TODO: reintroduce.
         # FPE unredact.
-        # if guard_input_response.result.fpe_context is not None:
-        #     redact_response = self._client.redact_client.unredact(
-        #         output_messages,
-        #         fpe_context=guard_input_response.result.fpe_context,
-        #     )
-        #     assert redact_response.result is not None
-        #     output_messages = list_message_adapter.validate_python(redact_response.result.data)
+        if guard_input_response.result.fpe_context is not None:
+            redact_response = self._client.ai_guard_client.unredact(
+                redacted_data=output_messages,
+                fpe_context=guard_input_response.result.fpe_context,
+            )
+            assert redact_response.result is not None
+            output_messages = list_message_adapter.validate_python(redact_response.result.data)
 
         guard_output_response = self._client.ai_guard_client.guard_chat_completions(
             guard_input={"messages": messages + output_messages},
@@ -1870,15 +1869,14 @@ class AsyncCrowdStrikeResponses(AsyncResponses):
             if c.type == "output_text"
         ]
 
-        # TODO: reintroduce.
         # FPE unredact.
-        # if guard_input_response.result.fpe_context is not None:
-        #     redact_response = await self._client.redact_client.unredact(
-        #         output_messages,
-        #         fpe_context=guard_input_response.result.fpe_context,
-        #     )
-        #     assert redact_response.result is not None
-        #     output_messages = list_message_adapter.validate_python(redact_response.result.data)
+        if guard_input_response.result.fpe_context is not None:
+            redact_response = self._client.ai_guard_client.unredact(
+                redacted_data=output_messages,
+                fpe_context=guard_input_response.result.fpe_context,
+            )
+            assert redact_response.result is not None
+            output_messages = list_message_adapter.validate_python(redact_response.result.data)
 
         guard_output_response = self._client.ai_guard_client.guard_chat_completions(
             guard_input={"messages": messages + output_messages}, event_type="output"
